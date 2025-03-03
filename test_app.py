@@ -1,10 +1,15 @@
 import json
+import pytest
 from app import app
 
-def test_home():
-    response = app.test_client().get('/')
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    with app.test_client() as client:
+        yield client
+
+def test_home(client):
+    response = client.get('/')
     assert response.status_code == 200
-    
-    # Parse the JSON response
     data = json.loads(response.data)
-    assert data == {"message": "Hello, World!"}
+    assert data['message'] == "Hello, World!"
