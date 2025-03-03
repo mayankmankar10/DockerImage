@@ -34,7 +34,8 @@ jobs:
         
       - name: Run Docker container
         run: |
-          docker run -d -p 5000:5000 flask-app
+          docker run -d -p 5002:5002 flask-app
+          
   
   build-and-publish:
     needs: build-and-test
